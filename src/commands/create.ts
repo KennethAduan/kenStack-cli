@@ -9,9 +9,17 @@ import {
   installDependencies,
   isPackageManagerAvailable,
 } from "../utils/install-deps";
-import { initGitRepository, removeGitFolder, cloneRepository } from "../utils/git";
+import {
+  initGitRepository,
+  removeGitFolder,
+  cloneRepository,
+} from "../utils/git";
 import { logger } from "../utils/logger";
-import { getTemplateById, getTemplateChoices, templates } from "../utils/templates";
+import {
+  getTemplateById,
+  getTemplateChoices,
+  templates,
+} from "../utils/templates";
 import { CreateOptions, PackageManager, Template } from "../types";
 
 export async function createProject(options: CreateOptions): Promise<void> {
@@ -19,7 +27,9 @@ export async function createProject(options: CreateOptions): Promise<void> {
 
   // Validate project name
   if (!isValidProjectName(projectName)) {
-    logger.error("Invalid project name. Use only alphanumeric characters, hyphens, and underscores.");
+    logger.error(
+      "Invalid project name. Use only alphanumeric characters, hyphens, and underscores."
+    );
     process.exit(1);
   }
 
@@ -47,7 +57,7 @@ export async function createProject(options: CreateOptions): Promise<void> {
     // Install dependencies
     const finalPackageManager = packageManager || template.packageManager;
     spinner.start(`Installing dependencies with ${finalPackageManager}...`);
-    
+
     await installDependencies(targetPath, finalPackageManager);
     spinner.succeed("Dependencies installed successfully");
 
@@ -57,12 +67,18 @@ export async function createProject(options: CreateOptions): Promise<void> {
     console.log(chalk.cyan(`  cd ${projectName}`));
     console.log(chalk.cyan("  npm run dev\n"));
   } catch (error) {
-    logger.error(`Failed to create project: ${error instanceof Error ? error.message : String(error)}`);
+    logger.error(
+      `Failed to create project: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
     process.exit(1);
   }
 }
 
-export async function promptForOptions(projectName?: string): Promise<CreateOptions> {
+export async function promptForOptions(
+  projectName?: string
+): Promise<CreateOptions> {
   // Template selection
   const templateAnswer = await inquirer.prompt({
     type: "list",
@@ -91,7 +107,9 @@ export async function promptForOptions(projectName?: string): Promise<CreateOpti
     );
 
     if (availableManagers.length === 0) {
-      logger.error("No package manager detected. Please install npm, yarn, pnpm, or bun.");
+      logger.error(
+        "No package manager detected. Please install npm, yarn, pnpm, or bun."
+      );
       process.exit(1);
     }
 
@@ -116,4 +134,3 @@ export async function promptForOptions(projectName?: string): Promise<CreateOpti
 function isValidProjectName(name: string): boolean {
   return /^[a-zA-Z0-9_-]+$/.test(name);
 }
-
