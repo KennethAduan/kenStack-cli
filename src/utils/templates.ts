@@ -12,7 +12,8 @@ export const templates: Template[] = [
   {
     id: "vite-shadcn",
     name: "KenStack Vite ShadCN",
-    description: "Vite + React + ShadCN + Tailwind CSS",
+    description:
+      "Vite + React + ShadCN + Tailwind CSS + TanStack Query + Jotai + TanStack Router",
     repository: "https://github.com/KennethAduan/kenStack-shadcn-vite.git",
     packageManager: "bun",
   },
